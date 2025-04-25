@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { connectDB } = require('./utils/db');
-const { setUserRoutes } = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,12 +9,13 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(bodyParser.json());
 
-// Database connection
-connectDB();
+// Initialize Supabase connection
+connectDB().catch(console.error);
 
 // Routes
-setUserRoutes(app);
+app.use(userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+

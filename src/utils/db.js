@@ -1,16 +1,26 @@
-const mongoose = require('mongoose');
+const { createClient } = require('@supabase/supabase-js');
+
+const supabaseUrl = 'https://gotoekkqoqzfpcqpsiud.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvdG9la2txb3F6ZnBjcXBzaXVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1NjYwNjgsImV4cCI6MjA2MTE0MjA2OH0.DVUXdgs6GPuo1-XHKMt_ibEobCbwqQ0s3ucX6YFMNnw';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('MongoDB connected successfully');
+        // Test the connection by making a simple query
+        const { data, error } = await supabase.from('users').select('count').single();
+
+        if (error) throw error;
+        console.log('Supabase connected successfully');
+        return supabase;
     } catch (error) {
-        console.error('MongoDB connection failed:', error.message);
+        console.error('Supabase connection failed:', error.message);
         process.exit(1);
     }
 };
 
-module.exports = connectDB;
+// Export both the connection function and the supabase client
+module.exports = {
+    connectDB,
+    supabase
+};
