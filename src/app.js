@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { connectDB } = require('./utils/db');
-const userRoutes = require('./routes/userRoutes');
+const propertyRoutes = require('./routes/propertyRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(bodyParser.json());
@@ -13,9 +13,8 @@ app.use(bodyParser.json());
 connectDB().catch(console.error);
 
 // Routes
-app.use(userRoutes);
+app.use(propertyRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-

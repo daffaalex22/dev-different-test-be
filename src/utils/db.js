@@ -7,8 +7,11 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const connectDB = async () => {
     try {
-        // Test the connection by making a simple query
-        const { data, error } = await supabase.from('users').select('count').single();
+        // Test the connection by making a simple query to properties table
+        const { data, error } = await supabase
+            .from('properties')
+            .select('count')
+            .single();
 
         if (error) throw error;
         console.log('Supabase connected successfully');
@@ -24,3 +27,4 @@ module.exports = {
     connectDB,
     supabase
 };
+
