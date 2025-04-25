@@ -29,8 +29,17 @@ const authMiddleware = async (req, res, next) => {
             }
         });
 
-        // Set the authenticated client in the request object
+        // Get the user data from the token
+        const { data: { user }, error } = await supabase.auth.getUser(token);
+
+        if (error || !user) {
+            logger.error('Invalid token or user not found');
+            return res.status(401).json({ error: 'Invalid token' });
+        }
+
+        // Set both the authenticated client and user in the request object
         req.supabase = supabase;
+        req.user = user;
         
         next();
     } catch (error) {
@@ -40,3 +49,4 @@ const authMiddleware = async (req, res, next) => {
 };
 
 module.exports = authMiddleware;
+
