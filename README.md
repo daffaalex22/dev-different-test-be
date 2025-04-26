@@ -2,6 +2,16 @@
 
 A RESTful API built with Express.js and Supabase for managing property listings. This service provides endpoints for creating, reading, updating, and deleting property listings with features like location tracking, price management, and property details.
 
+## API Documentation
+
+Interactive API documentation is available at:
+
+```
+http://localhost:8080/api-docs
+```
+
+This documentation provides detailed information about all available endpoints, request/response formats, and example payloads.
+
 ## Project Structure
 
 ```
